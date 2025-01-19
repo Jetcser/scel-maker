@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
+	_ "embed"
 	"encoding/binary"
 	"fmt"
-	"io"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -13,6 +13,9 @@ import (
 
 	"golang.org/x/net/html/charset"
 )
+
+//go:embed pinyin.bin
+var pinyin []byte
 
 var syllMap = list2map(list)
 
@@ -66,12 +69,7 @@ func Make(name string) {
 	wr.Write(make([]byte, 0x1540-0x120))
 
 	// 写拼音表
-	bin, err := os.Open("pinyin.bin")
-	if err != nil {
-		panic(err)
-	}
-	defer bin.Close()
-	io.Copy(wr, bin)
+	wr.Write(pinyin)
 
 	// 读取文件内容
 	cSize, cCount, wSize, wCount := 0, 0, 0, 0
