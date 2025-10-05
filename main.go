@@ -170,7 +170,7 @@ func Make(name string) {
 	// 打印输出词库的绝对路径
 	outPath := strings.TrimSuffix(name, filepath.Ext(name)) + ".scel"
 	absPath, _ := filepath.Abs(outPath)
-	fmt.Println("生成细胞词库路径：", absPath)
+	fmt.Println("生成细胞词库：", absPath)
 }
 
 func main() {
